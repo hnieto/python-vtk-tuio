@@ -278,54 +278,83 @@ class MedicalDemo:
             self.Rotate(self.ren, self.renwin, self.ren.GetActiveCamera(), fingerPrevCoords[0]/10, fingerPrevCoords[1]/10, fingerCurrCoords[0]/10, fingerCurrCoords[1]/10)
 
         elif self.tracker.fingers_detected() == self.ZOOM:
-            print "Zooming"
+            '''
+            BUG DESCRIPTION: zooming in/out depends on dollyFactor >/< 1 respectively. 
+                             if user zooms out and dollyFactor reaches some value n, where n<1,
+                             and then begins to zoom in, the camera will continue to zoom out even 
+                             n is increasing. Only after n>=1 will the camera begin to zoom in.
+                             The same effect occurs for the inverse.
+            
+            BUG STATUS: not fixed, in progress
+            '''
+            
+            #print "Zooming"
             fingerID1 = self.tracker._seen.keys()[0]
             fingerID2 = self.tracker._seen.keys()[1]
+            
+            finger1StartCoords = self.tracker._startCoords[fingerID1]
+            finger1PrevCoords = self.tracker._prevCoords[fingerID1]
+            finger1CurrCoords = self.tracker._coords[fingerID1]
+            
+            finger2StartCoords = self.tracker._startCoords[fingerID2]
+            finger2PrevCoords = self.tracker._prevCoords[fingerID2]
+            finger2CurrCoords = self.tracker._coords[fingerID2]
 
             # calculate distance between the finger1's current position and finger2's starting position
-            startDist = math.sqrt( (self.tracker._coords[fingerID1][0] - self.tracker._startCoords[fingerID2][0])**2 + (self.tracker._coords[fingerID1][1] - self.tracker._startCoords[fingerID2][1])**2 )
+            startDist = math.sqrt( (finger1CurrCoords[0] - finger2StartCoords[0])**2 + (finger1CurrCoords[1] - finger2StartCoords[1])**2 )
 
             # calculate distance between the finger1's current position and finger2's current position
-            currentDist = math.sqrt( (self.tracker._coords[fingerID1][0] - self.tracker._coords[fingerID2][0])**2 + (self.tracker._coords[fingerID1][1] - self.tracker._coords[fingerID2][1])**2 )
+            currentDist = math.sqrt( (finger1CurrCoords[0] - finger2CurrCoords[0])**2 + (finger1CurrCoords[1] - finger2CurrCoords[1])**2 )
 
             # show finger markers
-            self.fingerMarker1.textActor.SetPosition(self.tracker._coords[fingerID1][:2])
-            self.fingerMarker2.textActor.SetPosition(self.tracker._coords[fingerID2][:2])
+            self.fingerMarker1.textActor.SetPosition(finger1CurrCoords[:2])
+            self.fingerMarker2.textActor.SetPosition(finger2CurrCoords[:2])
             self.fingerMarker2.textActor.VisibilityOn()  
             
             # hide all other markers
             self.fingerMarker3.textActor.VisibilityOff() 
 
-            self.Zoom(self.ren, self.renwin, self.ren.GetActiveCamera(), startDist, currentDist)
+            if finger1CurrCoords != finger1PrevCoords or finger2CurrCoords != finger2PrevCoords:
+                self.Zoom(self.ren, self.renwin, self.ren.GetActiveCamera(), startDist, currentDist)
+            else:
+                #print 'WILL NOT ZOOM. No change in finger position.'
+                pass
             
         elif self.tracker.fingers_detected() == self.PAN:
             print "Panning"
             fingerID1 = self.tracker._seen.keys()[0]
             fingerID2 = self.tracker._seen.keys()[1]
             fingerID3 = self.tracker._seen.keys()[2]
+            
+            finger1PrevCoords = self.tracker._prevCoords[fingerID1]
+            finger1CurrCoords = self.tracker._coords[fingerID1]
+            
+            finger2PrevCoords = self.tracker._prevCoords[fingerID2]
+            finger2CurrCoords = self.tracker._coords[fingerID2]
 
-            finger3StartCoords = self.tracker._startCoords[fingerID3]
+            finger3PrevCoords = self.tracker._prevCoords[fingerID3]
             finger3CurrCoords = self.tracker._coords[fingerID3]
 
             # show finger markers
-            self.fingerMarker1.textActor.SetPosition(self.tracker._coords[fingerID1][0], self.tracker._coords[fingerID1][1])
-            self.fingerMarker2.textActor.SetPosition(self.tracker._coords[fingerID2][0], self.tracker._coords[fingerID2][1])
-            self.fingerMarker3.textActor.SetPosition(self.tracker._coords[fingerID3][0], self.tracker._coords[fingerID3][1])
+            self.fingerMarker1.textActor.SetPosition(finger1CurrCoords[0], finger1CurrCoords[1])
+            self.fingerMarker2.textActor.SetPosition(finger2CurrCoords[0], finger2CurrCoords[1])
+            self.fingerMarker3.textActor.SetPosition(finger3CurrCoords[0], finger3CurrCoords[1])
             self.fingerMarker3.textActor.VisibilityOn() 
 
-            self.Pan(self.ren, self.renwin, self.ren.GetActiveCamera(), finger3StartCoords[0]/10, finger3StartCoords[1]/10, finger3CurrCoords[0]/10, finger3CurrCoords[1]/10, self.renwin.GetSize()[0]/2.0, self.renwin.GetSize()[1]/2.0)
+            self.Pan(self.ren, self.renwin, self.ren.GetActiveCamera(), finger3PrevCoords[0], finger3PrevCoords[1], finger3CurrCoords[0], finger3CurrCoords[1], self.renwin.GetSize()[0]/2.0, self.renwin.GetSize()[1]/2.0)
 
         elif self.tracker.fingers_detected() == self.TERMINATE:
             self.terminate = True
         
-    def Rotate(self, ren, renwin, camera, startx, starty, curx, cury):  
-        camera.Azimuth(startx-curx)
-        camera.Elevation(starty-cury)
+    def Rotate(self, ren, renwin, camera, prevx, prevy, curx, cury):  
+        camera.Azimuth(prevx-curx)
+        camera.Elevation(prevy-cury)
         camera.OrthogonalizeViewUp()
         renwin.Render()
         
     def Zoom(self, ren, renwin, camera, startDist, currentDist):
-        dollyFactor = pow(1.01,(0.05*(currentDist-startDist)))
+        dollyFactor = pow(1.03,(0.05*(currentDist-startDist)))
+        print 'dollyFactor=' + `dollyFactor`
         if camera.GetParallelProjection():
             parallelScale = camera.GetParallelScale()*dollyFactor
             camera.SetParallelScale(parallelScale)
@@ -334,7 +363,7 @@ class MedicalDemo:
             ren.ResetCameraClippingRange()
         renwin.Render()
         
-    def Pan(self, ren, renwin, camera, startx, starty, curx, cury, centerX, centerY):
+    def Pan(self, ren, renwin, camera, prevx, prevy, curx, cury, centerX, centerY):
         FPoint = camera.GetFocalPoint()
         FPoint0 = FPoint[0]
         FPoint1 = FPoint[1]
@@ -350,8 +379,8 @@ class MedicalDemo:
         DPoint = ren.GetDisplayPoint()
         focalDepth = DPoint[2]
 
-        APoint0 = centerX+(curx-startx)
-        APoint1 = centerY+(cury-starty)
+        APoint0 = centerX+(curx-prevx)
+        APoint1 = centerY+(cury-prevy)
 
         ren.SetDisplayPoint(APoint0, APoint1, focalDepth)
         ren.DisplayToWorld()
