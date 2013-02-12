@@ -14,6 +14,7 @@ class CursorTracker(object):
     def __init__(self, max_cursors):
         self._seen = {}
         self._coords = {}
+        self._prevCoords = {}
         self._startCoords = {}
         self._freeslots = collections.deque(range(max_cursors))
         
@@ -31,7 +32,10 @@ class CursorTracker(object):
                 # cursor still active
                 vanished.remove(id)
                 if self._coords[id] != (x, y):
+                    self._prevCoords[id] = self._coords[id]
                     self._coords[id] = (x, y)
+                else:
+                    self._prevCoords[id] = self._coords[id]
             else:
                 # found a new cursor
                 taken_slot = self.grabslot()
@@ -40,14 +44,17 @@ class CursorTracker(object):
                     continue
                 self._seen[id] = taken_slot
                 self._startCoords[id] = (x,y)
+                self._prevCoords[id] = (x,y)
                 self._coords[id] = (x, y)
 
         for id in vanished:
             # the cursor vanished
             self._startCoords[id] = (self._startCoords[id][0]+2, self._startCoords[id][1]+2)
+            self._prevCoords[id] = (self._prevCoords[id][0]+2, self._prevCoords[id][1]+2)
             self._coords[id] = (self._coords[id][0]+2, self._coords[id][1]+2)
             self.freeslot(self._seen[id])
             del self._startCoords[id]
+            del self._prevCoords[id]
             del self._coords[id]
             del self._seen[id]
             
@@ -65,3 +72,4 @@ class CursorTracker(object):
             
     def fingers_detected(self):
         return len(self._seen)
+        

@@ -264,7 +264,7 @@ class MedicalDemo:
         elif self.tracker.fingers_detected() == self.ROTATE:
             print "Rotating"
             fingerID1 = self.tracker._seen.keys()[0]
-            fingerStartCoords = self.tracker._startCoords[fingerID1]
+            fingerPrevCoords = self.tracker._prevCoords[fingerID1]
             fingerCurrCoords = self.tracker._coords[fingerID1]
             
             # show finger marker
@@ -275,7 +275,7 @@ class MedicalDemo:
             self.fingerMarker2.textActor.VisibilityOff()
             self.fingerMarker3.textActor.VisibilityOff()
             
-            self.Rotate(self.ren, self.renwin, self.ren.GetActiveCamera(), fingerStartCoords[0]/10, fingerStartCoords[1]/10, fingerCurrCoords[0]/10, fingerCurrCoords[1]/10)
+            self.Rotate(self.ren, self.renwin, self.ren.GetActiveCamera(), fingerPrevCoords[0]/10, fingerPrevCoords[1]/10, fingerCurrCoords[0]/10, fingerCurrCoords[1]/10)
 
         elif self.tracker.fingers_detected() == self.ZOOM:
             print "Zooming"
@@ -369,7 +369,7 @@ class MedicalDemo:
         camera.SetFocalPoint( (FPoint0-RPoint0)/2.0 + FPoint0, (FPoint1-RPoint1)/2.0 + FPoint1, (FPoint2-RPoint2)/2.0 + FPoint2)
         camera.SetPosition( (FPoint0-RPoint0)/2.0 + PPoint0, (FPoint1-RPoint1)/2.0 + PPoint1, (FPoint2-RPoint2)/2.0 + PPoint2)
         renwin.Render()
-        
+
     def Kill(self):
         print "Stopping MedicalDemo TUIO tracking"
         self.tracking.stop()

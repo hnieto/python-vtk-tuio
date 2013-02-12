@@ -120,7 +120,7 @@ class DemoChooser:
         elif self.tracker.fingers_detected() == self.ROTATE:
             print "Rotating"
             fingerID1 = self.tracker._seen.keys()[0]
-            fingerStartCoords = self.tracker._startCoords[fingerID1]
+            fingerPrevCoords = self.tracker._prevCoords[fingerID1]
             fingerCurrCoords = self.tracker._coords[fingerID1]
             
             # show finger marker
@@ -130,8 +130,8 @@ class DemoChooser:
             # hide all other markers
             self.fingerMarker2.textActor.VisibilityOff()
             
-            self.Rotate(self.ren, self.renwin, self.ren.GetActiveCamera(), fingerStartCoords[0]/10, fingerStartCoords[1]/10, fingerCurrCoords[0]/10, fingerCurrCoords[1]/10)
-        
+            self.Rotate(self.ren, self.renwin, self.ren.GetActiveCamera(), fingerPrevCoords[0]/10, fingerPrevCoords[1]/10, fingerCurrCoords[0]/10, fingerCurrCoords[1]/10)
+
         elif self.tracker.fingers_detected() == self.PICK:
             print "Picking Mode"
             fingerID1 = self.tracker._seen.keys()[0]
