@@ -27,7 +27,7 @@ class Marker:
         self.textMapper.SetInput(id)  
         self.tprop = self.textMapper.GetTextProperty()
         self.tprop.SetFontFamilyToArial()
-        self.tprop.SetFontSize(20)
+        self.tprop.SetFontSize(30)
         self.tprop.BoldOn()
         self.tprop.ShadowOn()
         self.tprop.SetColor(1, 0, 0)
@@ -48,9 +48,9 @@ class MedicalDemo:
         self.iren.SetRenderWindow(self.renwin)
         
         # Create text mappers and 2d actors to display finger position.
-        self.fingerMarker1 = Marker("1")
-        self.fingerMarker2 = Marker("2")
-        self.fingerMarker3 = Marker("3")
+        self.fingerMarker1 = Marker("(1)")
+        self.fingerMarker2 = Marker("(2)")
+        self.fingerMarker3 = Marker("(3)")
 
         # The following reader is used to read a series of 2D slices (images)
         # that compose the volume. The slice dimensions are set, and the
@@ -231,7 +231,7 @@ class MedicalDemo:
         TUIO STUFF
         '''
         self.tracking = tuio.Tracking('')
-        self.tracker = CursorTracker(8)
+        self.tracker = CursorTracker(4)
         self.terminate = False
 
     def Start(self):
@@ -252,7 +252,7 @@ class MedicalDemo:
         self.ROTATE = 1 
         self.ZOOM = 2
         self.PAN = 3
-        self.TERMINATE = 8
+        self.TERMINATE = 4
         
         if self.tracker.fingers_detected() == self.NONE:
             print "No Fingers Detected"

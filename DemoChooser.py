@@ -39,7 +39,7 @@ class Marker:
         self.textMapper.SetInput(id)  
         self.tprop = self.textMapper.GetTextProperty()
         self.tprop.SetFontFamilyToArial()
-        self.tprop.SetFontSize(10)
+        self.tprop.SetFontSize(30)
         self.tprop.BoldOn()
         self.tprop.ShadowOn()
         self.tprop.SetColor(1, 0, 0)
@@ -70,8 +70,9 @@ class DemoChooser:
         self.purpleSphere = Sphere((-4,-4,0), 1.0, (1,0,1))
         
         # Create text mappers and 2d actors to display finger position.
-        self.fingerMarker1 = Marker("1")
-        self.fingerMarker2 = Marker("2")
+        self.fingerMarker1 = Marker("(1)")
+        self.fingerMarker2 = Marker("(2)")
+        self.fingerMarker3 = Marker("(3)")
 
         # Add the actors to the renderer, set the background and size
         self.ren.AddActor(self.blueSphere.sphereActor)
