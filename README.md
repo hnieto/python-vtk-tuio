@@ -6,7 +6,7 @@ This project uses the [pyTUIO library](http://code.google.com/p/pytuio/) to obta
 
 ## Description
 
-The `Main.py` script will launch a VTK GUI session seen above. This session will as our Demo launcher. Using one finger will rotate the scene. 
+The `Main.py` script will launch the VTK GUI session seen above. This session will act as our Demo launcher. Using one finger will rotate the scene. 
 Two fingers will allow the user to select an object with the second finger. Hovering over the main sphere will display four additional spheres. 
 Selecting any of these spheres will automatically close the current VTK session and launch a different demo.
 
@@ -36,11 +36,16 @@ A small number will be used to represent cursors.
 
 ### Gestures
 
-Rotate: 1 finger swipe
-Zoom In: 2 finger reverse pinch
-Zoom Out: 2 finger pinch
-Pan: Requires 3 fingers. 3rd finger position is used to translate image
-Close Demo: 4 fingers 
+Rotate: 1 finger swipe 
+
+Zoom In: 2 finger reverse pinch 
+
+Zoom Out: 2 finger pinch 
+
+Pan: Requires 3 fingers. 3rd finger position is used to translate image 
+
+Close Demo: 4 fingers  
+
 
 ## Requirements
 
