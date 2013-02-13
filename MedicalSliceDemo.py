@@ -35,7 +35,7 @@ class Marker:
         self.textActor.VisibilityOff()
         self.textActor.SetMapper(self.textMapper)
 
-class MedicalDemo:
+class MedicalSliceDemo:
     def __init__(self):
 
         # Create the renderer, the render window, and the interactor. The
@@ -180,23 +180,19 @@ class MedicalDemo:
         self.coronal.GetMapper().SetInputConnection(self.coronalColors.GetOutputPort())
         self.coronal.SetDisplayExtent(0, 63, 32, 32, 0, 92)
 
-        # It is convenient to create an initial view of the data. The FocalPoint
-        # and Position form a vector direction. Later on (ResetCamera() method)
-        # this vector is used to position the camera to look at the data in
-        # this direction.
+        # move camera to view sagital slice 
         self.aCamera = vtk.vtkCamera()
-        self.aCamera.SetViewUp(0, 0, -1)
-        self.aCamera.SetPosition(0, 1, 0)
-        self.aCamera.SetFocalPoint(0, 0, 0)
-        self.aCamera.ComputeViewPlaneNormal()
+        self.aCamera.SetPosition(1,0,0) # view from positive x axis
+        self.aCamera.SetViewUp(0,0,1) # z axis
+        self.aCamera.Roll(180) # rotate 180 degrees
 
         # Actors are added to the renderer.
-        self.ren.AddActor(self.outline)
+        #self.ren.AddActor(self.outline)
         self.ren.AddActor(self.sagittal)
-        self.ren.AddActor(self.axial)
-        self.ren.AddActor(self.coronal)
-        self.ren.AddActor(self.skin)
-        self.ren.AddActor(self.bone)
+        #self.ren.AddActor(self.axial)
+        #self.ren.AddActor(self.coronal)
+        #self.ren.AddActor(self.skin)
+        #self.ren.AddActor(self.bone)
         self.ren.AddActor2D(self.fingerMarker1.textActor)
         self.ren.AddActor2D(self.fingerMarker2.textActor)
         self.ren.AddActor2D(self.fingerMarker3.textActor)
@@ -231,7 +227,7 @@ class MedicalDemo:
         TUIO STUFF
         '''
         self.tracking = tuio.Tracking('')
-        self.tracker = CursorTracker(8)
+        self.tracker = CursorTracker(4)
         self.terminate = False
 
     def Start(self):
@@ -252,7 +248,7 @@ class MedicalDemo:
         self.ROTATE = 1 
         self.ZOOM = 2
         self.PAN = 3
-        self.TERMINATE = 8
+        self.TERMINATE = 4
         
         if self.tracker.fingers_detected() == self.NONE:
             print "No Fingers Detected"
@@ -282,7 +278,7 @@ class MedicalDemo:
             BUG DESCRIPTION: zooming in/out depends on dollyFactor >/< 1 respectively. 
                              if user zooms out and dollyFactor reaches some value n, where n<1,
                              and then begins to zoom in, the camera will continue to zoom out even 
-                             n is increasing. Only after n>=1 will the camera begin to zoom in.
+                             though n is increasing. Only after n>=1 will the camera begin to zoom in.
                              The same effect occurs for the inverse.
             
             BUG STATUS: not fixed, in progress
@@ -348,7 +344,8 @@ class MedicalDemo:
         
     def Rotate(self, ren, renwin, camera, prevx, prevy, curx, cury):  
         camera.Azimuth(prevx-curx)
-        camera.Elevation(prevy-cury)
+        ''' comment out to fix rotation to x axis only '''
+        #camera.Elevation(prevy-cury)
         camera.OrthogonalizeViewUp()
         renwin.Render()
         

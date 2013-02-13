@@ -1,6 +1,7 @@
 from vtk import *
 from DemoChooser import DemoChooser
 from MedicalDemo import MedicalDemo
+from MedicalSliceDemo import MedicalSliceDemo
 from TestDemo import TestDemo
 
 if __name__ == '__main__':
@@ -19,12 +20,18 @@ if __name__ == '__main__':
                 gui.Kill()
                 
             elif nextDemo == 1:
+                medSliceDemo = MedicalSliceDemo()
+                medSliceDemo.Start()
+                medSliceDemo.Kill()
+                nextDemo = 0
+                
+            elif nextDemo == 2:
                 medDemo = MedicalDemo()
                 medDemo.Start()
                 medDemo.Kill()
                 nextDemo = 0
                 
-            elif nextDemo == 2:
+            elif nextDemo == 3:
                 testDemo = TestDemo()
                 testDemo.Start()
                 testDemo.Kill()
