@@ -31,7 +31,7 @@ class Marker:
         self.textActor.VisibilityOff()
         self.textActor.SetMapper(self.textMapper)
 
-class TestDemo:
+class MultiTouchTest:
 
     def __init__(self):
 

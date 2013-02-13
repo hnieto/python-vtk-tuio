@@ -1,8 +1,8 @@
 from vtk import *
 from DemoChooser import DemoChooser
-from MedicalDemo import MedicalDemo
-from MedicalSliceDemo import MedicalSliceDemo
-from TestDemo import TestDemo
+from MultipleSlices import MultipleSlices
+from SingleSlice import SingleSlice
+from MultiTouchTest import MultiTouchTest
 
 if __name__ == '__main__':
     gui = DemoChooser()
@@ -20,21 +20,21 @@ if __name__ == '__main__':
                 gui.Kill()
                 
             elif nextDemo == 1:
-                medSliceDemo = MedicalSliceDemo()
-                medSliceDemo.Start()
-                medSliceDemo.Kill()
+                singleSlice = SingleSlice()
+                singleSlice.Start()
+                singleSlice.Kill()
                 nextDemo = 0
                 
             elif nextDemo == 2:
-                medDemo = MedicalDemo()
-                medDemo.Start()
-                medDemo.Kill()
+                multipleSlices = MultipleSlices()
+                multipleSlices.Start()
+                multipleSlices.Kill()
                 nextDemo = 0
                 
             elif nextDemo == 3:
-                testDemo = TestDemo()
-                testDemo.Start()
-                testDemo.Kill()
+                multiTouchTest = MultiTouchTest()
+                multiTouchTest.Start()
+                multiTouchTest.Kill()
                 nextDemo = 0
                 
             else:

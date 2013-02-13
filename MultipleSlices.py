@@ -35,7 +35,7 @@ class Marker:
         self.textActor.VisibilityOff()
         self.textActor.SetMapper(self.textMapper)
 
-class MedicalDemo:
+class MultipleSlices:
     def __init__(self):
 
         # Create the renderer, the render window, and the interactor. The
