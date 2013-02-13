@@ -1,6 +1,8 @@
 '''
 CursorTracker.py will maintain a real-time list of all cursors 
 and their respective positions. It is updated via a tuio "thread"
+
+Modified from Python Input Module for NumptyPhysics 
 '''
 
 import sys
