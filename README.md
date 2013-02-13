@@ -14,7 +14,7 @@ Each demo creates an instance of `CursorTracker` located in `MultiTouch.py`. The
 and it's start, previous, and current positions. Each demo uses this information to create gestures like pinch zooming, rotating, and panning. 
 
 
-### Demos
+## Sagital Slice Demo
 
 Displays a sagital view of the head. The scene can only be rotated along its x axis. 
 **IMPORTANT** 
@@ -22,6 +22,8 @@ Make sure to pass the correct path to the `/headsq` directory as an arguement to
 
 ![MedicalSliceDemo] (https://dl.dropbox.com/u/25652072/MedicalSliceDemo.png)
 
+
+## Muliple Slices Demo
 
 This example reads a volume dataset, extracts two isosurfaces that represent the skin and bone, creates three orthogonal planes
 (sagittal, axial, coronal), and displays them. 
@@ -31,13 +33,15 @@ Make sure to pass the correct path to the `/headsq` directory as an arguement to
 ![MedicalDemo] (https://dl.dropbox.com/u/25652072/MedicalDemo.png)
 
 
+## MultiTouch Test Demo
+
 TestDemo.py is a used to verify that TUIO events are being properly received and tracked.
 A small number will be used to represent cursors.
 
 ![TestDemo] (https://dl.dropbox.com/u/25652072/TestDemo.png)
 
 
-### Gestures
+## Gestures
 
 Rotate: 1 finger swipe 
 Zoom In: 2 finger reverse pinch 
