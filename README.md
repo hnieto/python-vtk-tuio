@@ -27,7 +27,7 @@ Make sure to pass the correct path to the `/headsq` directory as an arguement to
 
 This example reads a volume dataset, extracts two isosurfaces that represent the skin and bone, creates three orthogonal planes
 (sagittal, axial, coronal), and displays them. 
-**IMPORTANT**
+**IMPORTANT**  
 Make sure to pass the correct path to the `/headsq` directory as an arguement to the `vtkVolume16Reader` method `SetFilePrefix()`.
 
 ![MedicalDemo] (https://dl.dropbox.com/u/25652072/MedicalDemo.png)
@@ -43,11 +43,11 @@ A small number will be used to represent cursors.
 
 ## Gestures
 
-Rotate: 1 finger swipe 
-Zoom In: 2 finger reverse pinch 
-Zoom Out: 2 finger pinch 
-Pan: Requires 3 fingers. 3rd finger position is used to translate image 
-Close Demo: 4 fingers  
+**Rotate:** 1 finger swipe 
+**Zoom In:** 2 finger reverse pinch 
+**Zoom Out:** 2 finger pinch 
+**Pan:** Requires 3 fingers. 3rd finger position is used to translate image 
+**Close Demo:** 4 fingers  
 
 
 ## Requirements
