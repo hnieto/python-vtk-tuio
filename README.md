@@ -43,10 +43,10 @@ A small number will be used to represent cursors.
 
 ## Gestures
 
-**Rotate:** 1 finger swipe 
-**Zoom In:** 2 finger reverse pinch 
-**Zoom Out:** 2 finger pinch 
-**Pan:** Requires 3 fingers. 3rd finger position is used to translate image 
+**Rotate:** 1 finger swipe   
+**Zoom In:** 2 finger reverse pinch   
+**Zoom Out:** 2 finger pinch   
+**Pan:** Requires 3 fingers. 3rd finger position is used to translate image   
 **Close Demo:** 4 fingers  
 
 
