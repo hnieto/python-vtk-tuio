@@ -1,6 +1,6 @@
 # Python-VTK with TUIO
 
-![Python-VTK-TUIO](https://dl.dropbox.com/u/25652072/DemoChooser.png)
+![Python-VTK-TUIO](http://imgur.com/aiaUtrQ.png)
 
 This project uses the [pyTUIO library](http://code.google.com/p/pytuio/) to obtain multitouch information that is then used to interact with a VTK session. 
 
@@ -20,7 +20,7 @@ Displays a sagital view of the head. The scene can only be rotated along its x a
 **IMPORTANT** 
 Make sure to pass the correct path to the `/headsq` directory as an arguement to the `vtkVolume16Reader` method `SetFilePrefix()`.
 
-![MedicalSliceDemo] (https://dl.dropbox.com/u/25652072/MedicalSliceDemo.png)
+![MedicalSliceDemo](http://imgur.com/ih5lstj.png)
 
 
 ## Muliple Slices Demo
@@ -30,7 +30,7 @@ This example reads a volume dataset, extracts two isosurfaces that represent the
 **IMPORTANT**  
 Make sure to pass the correct path to the `/headsq` directory as an arguement to the `vtkVolume16Reader` method `SetFilePrefix()`.
 
-![MedicalDemo] (https://dl.dropbox.com/u/25652072/MedicalDemo.png)
+![MedicalDemo](http://imgur.com/U6CnZJx.png)
 
 
 ## MultiTouch Test Demo
@@ -38,7 +38,7 @@ Make sure to pass the correct path to the `/headsq` directory as an arguement to
 TestDemo.py is a used to verify that TUIO events are being properly received and tracked.
 A small number will be used to represent cursors.
 
-![TestDemo] (https://dl.dropbox.com/u/25652072/TestDemo.png)
+![TestDemo](http://imgur.com/NuxzOWo.png)
 
 
 ## Gestures
